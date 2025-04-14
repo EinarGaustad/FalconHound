@@ -16,6 +16,7 @@ func GetSecretFromAzureKeyVault(keyVaultName string, secretName string, managedI
 	var cred azcore.TokenCredential
 	var err error
 	if managedIdentity == "true" {
+		log.Printf("[+] Using Managed Identity")
 		cred, err = azidentity.NewWorkloadIdentityCredential(nil)
 	} else {
 		cred, err = azidentity.NewClientSecretCredential(viper.GetString("keyvault.tenantID"), viper.GetString("keyvault.appID"), viper.GetString("keyvault.appSecret"), nil)
